@@ -45,7 +45,12 @@ object List {
   // Exercise 3.5
   @annotation.tailrec
   def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
-    case Cons(head, tail) if (f(head)) => dropWhile(tail, f)
+    case Cons(head, tail) if f(head) => dropWhile(tail, f)
+    case _ => l
+  }
+
+  def dropWhileCurry[A](l: List[A])(f: A => Boolean): List[A] = l match {
+    case Cons(head, tail) if f(head) => dropWhile(tail, f)
     case _ => l
   }
 
@@ -61,4 +66,46 @@ object List {
     case Cons(head, tail) => Cons(head, init(tail))
   }
 
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
+    case Nil => z
+    case Cons(h, t) => f(h, foldRight(t, z)(f))
+  }
+
+  def sum2(ns: List[Int]) = {
+    foldRight(ns, 0)(_ + _)
+  }
+
+  def product2(ns: List[Double]) = {
+    foldRight(ns, 1.0)(_ * _)
+  }
+
+  // Exercise 3.9
+  def length[A](as: List[A]): Int = {
+    foldRight(as, 0)((_, y) => y + 1)
+  }
+
+  // Exercise 3.10
+  @annotation.tailrec
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = as match {
+    case Nil => z
+    case Cons(h, t) => foldLeft(t, f(z, h))(f)
+  }
+
+  // Exercise 3.11
+  def sum3(ns: List[Int]) = {
+    foldLeft(ns, 0)(_ + _)
+  }
+
+  def product3(ns: List[Double]) = {
+    foldLeft(ns, 1.0)(_ * _)
+  }
+
+  def length2[A](as: List[A]): Int = {
+    foldLeft(as, 0)((x, _) => x + 1)
+  }
+
+  // Exercise 3.12
+  def reverse[A](as: List[A]) : List[A] = {
+    foldLeft(as, List(): List[A])((x, y) => Cons(y, x))
+  }
 }

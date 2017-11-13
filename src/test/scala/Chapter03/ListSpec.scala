@@ -20,6 +20,14 @@ class ListSpec extends FlatSpec with Matchers {
     List.sum(List(1, 2, 3, 4)) should be(10)
     List.sum(List()) should be(0)
     List.sum(List(1)) should be(1)
+
+    List.sum2(List(1, 2, 3, 4)) should be(10)
+    List.sum2(List()) should be(0)
+    List.sum2(List(1)) should be(1)
+
+    List.sum3(List(1, 2, 3, 4)) should be(10)
+    List.sum3(List()) should be(0)
+    List.sum3(List(1)) should be(1)
   }
 
   "Product" should "multiply all items in a List" in {
@@ -28,6 +36,18 @@ class ListSpec extends FlatSpec with Matchers {
     List.product(List(1.5, 4.5)) should be(6.75)
     List.product(List()) should be(1)
     List.product(List(1)) should be(1)
+
+    List.product2(List(1, 2, 3, 4)) should be(24)
+    List.product2(List(1, 2, 0, 4)) should be(0)
+    List.product2(List(1.5, 4.5)) should be(6.75)
+    List.product2(List()) should be(1)
+    List.product2(List(1)) should be(1)
+
+    List.product3(List(1, 2, 3, 4)) should be(24)
+    List.product3(List(1, 2, 0, 4)) should be(0)
+    List.product3(List(1.5, 4.5)) should be(6.75)
+    List.product3(List()) should be(1)
+    List.product3(List(1)) should be(1)
   }
 
   // Exercise 3.2
@@ -57,6 +77,8 @@ class ListSpec extends FlatSpec with Matchers {
     List.dropWhile(List(1, 2, 3, 4), (a: Int) => a < 3) should be(List(3, 4))
     List.dropWhile(List(1, 2, 3, 4), (a: Int) => a > 3) should be(List(1, 2, 3, 4))
     List.dropWhile(List(), (a: Int) => a < 3) should be(List())
+
+    List.dropWhileCurry(List(1, 2, 3, 4, 5))(x => x < 4) should be(List(4, 5))
   }
 
   "Append" should "add all the elements of one list to the end of another" in {
@@ -67,10 +89,32 @@ class ListSpec extends FlatSpec with Matchers {
     List.append(List(1, 2, 3, 4), Nil) should be(List(1, 2, 3, 4))
   }
 
+  // Exercise 3.6
   "Init" should "return a List consisting of all but the last element of a List" in {
     List.init(List(1, 2, 3, 4, 5)) should be(List(1, 2, 3, 4))
     List.init(List(1)) should be(List())
     List.init(List()) should be(List())
     List.init(Nil) should be(Nil)
+  }
+
+  // Exercise 3.8
+  "Passing Nil and Cons" should "work with foldRight" in {
+    List.foldRight(List(1, 2, 3), Nil: List[Int])(Cons(_, _)) should be(List(1, 2, 3))
+  }
+
+  // Exercise 3.9
+  "Length" should "compute the length of a List" in {
+    List.length(List(1, 2, 3, 4, 5)) should be(5)
+    List.length(List()) should be(0)
+
+    List.length2(List(1, 2, 3, 4, 5)) should be(5)
+    List.length2(List()) should be(0)
+  }
+
+  // Exercise 3.12
+  "Reverse" should "reverse a given List" in {
+    List.reverse(List(1, 2, 3, 4, 5)) should be(List(5, 4, 3, 2, 1))
+    List.reverse(List(1.1, 2.2, 3.3)) should be(List(3.3, 2.2, 1.1))
+    List.reverse(List()) should be(List())
   }
 }
