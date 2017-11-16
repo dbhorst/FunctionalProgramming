@@ -86,7 +86,7 @@ object List {
 
   // Exercise 3.10
   @annotation.tailrec
-  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = as match {
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = as match {
     case Nil => z
     case Cons(h, t) => foldLeft(t, f(z, h))(f)
   }
@@ -105,7 +105,35 @@ object List {
   }
 
   // Exercise 3.12
-  def reverse[A](as: List[A]) : List[A] = {
+  def reverse[A](as: List[A]): List[A] = {
     foldLeft(as, List(): List[A])((x, y) => Cons(y, x))
+  }
+
+  // Exercise 3.14
+  def append2[A](a1: List[A], a2: List[A]): List[A] = {
+    foldRight(a1, a2)((x, y) => Cons(x, y))
+  }
+
+  // Exercise 3.15
+  def concat[A](ass: List[List[A]]): List[A] = ass match {
+    case Nil => Nil
+    case Cons(h, Nil) => h
+    case Cons(h, t) => append2(h, concat(t))
+  }
+
+  // Exercise 3.16
+  def transform(as: List[Int]): List[Int] = as match {
+    case Nil => Nil
+    case Cons(h, Nil) => Cons(h + 1, Nil)
+    case Cons(h, t) => Cons(h + 1, transform(t))
+  }
+
+  def transform2(as: List[Int]): List[Int] = {
+    foldRight(as, List(): List[Int])((x, y) => Cons(x + 1, y))
+  }
+
+  // Exercise 3.17
+  def doubleToString(as: List[Double]): List[String] = {
+    foldRight(as, List(): List[String])((x, y) => Cons(x.toString, y))
   }
 }

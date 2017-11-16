@@ -87,6 +87,12 @@ class ListSpec extends FlatSpec with Matchers {
     List.append(List(1, 2, 3, 4), List()) should be(List(1, 2, 3, 4))
     List.append(Nil, List(5, 6, 7, 8)) should be(List(5, 6, 7, 8))
     List.append(List(1, 2, 3, 4), Nil) should be(List(1, 2, 3, 4))
+
+    List.append2(List(1, 2, 3, 4), List(5, 6, 7, 8)) should be(List(1, 2, 3, 4, 5, 6, 7, 8))
+    List.append2(List(), List(5, 6, 7, 8)) should be(List(5, 6, 7, 8))
+    List.append2(List(1, 2, 3, 4), List()) should be(List(1, 2, 3, 4))
+    List.append2(Nil, List(5, 6, 7, 8)) should be(List(5, 6, 7, 8))
+    List.append2(List(1, 2, 3, 4), Nil) should be(List(1, 2, 3, 4))
   }
 
   // Exercise 3.6
@@ -116,5 +122,31 @@ class ListSpec extends FlatSpec with Matchers {
     List.reverse(List(1, 2, 3, 4, 5)) should be(List(5, 4, 3, 2, 1))
     List.reverse(List(1.1, 2.2, 3.3)) should be(List(3.3, 2.2, 1.1))
     List.reverse(List()) should be(List())
+  }
+
+  // Exercise 3.15
+  "Concat" should "concatinate a List of Lists into a single List" in {
+    var ass = List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))
+    List.concat(ass) should be(List(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    List.concat(List(List(1, 2, 3))) should be(List(1, 2, 3))
+    List.concat(List()) should be(List())
+  }
+
+  // Exercise 3.16
+  "Transform" should "add 1 to every element of a List" in {
+    List.transform(List(1, 2, 3)) should be(List(2, 3, 4))
+    List.transform(List()) should be(List())
+    List.transform(Nil) should be(Nil)
+
+    List.transform2(List(1, 2, 3)) should be(List(2, 3, 4))
+    List.transform2(List()) should be(List())
+    List.transform2(Nil) should be(Nil)
+  }
+
+  // Exercise 3.17
+  "Double to String" should "convert every Double of a List to String" in {
+    List.doubleToString(List(1.1, 2.2, 3.3)) should be(List("1.1", "2.2", "3.3"))
+    List.doubleToString(List()) should be(List())
+    List.doubleToString(Nil) should be(Nil)
   }
 }
