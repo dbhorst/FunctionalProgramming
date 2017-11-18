@@ -38,8 +38,7 @@ object List {
   // Exercise 3.4
   @annotation.tailrec
   def drop[A](l: List[A], n: Int): List[A] =
-    if (n <= 0) l
-    else if (l == List()) l
+    if (n <= 0 || l == List()) l
     else drop(tail(l), n - 1)
 
   // Exercise 3.5
@@ -136,4 +135,39 @@ object List {
   def doubleToString(as: List[Double]): List[String] = {
     foldRight(as, List(): List[String])((x, y) => Cons(x.toString, y))
   }
+
+  // Exercise 3.18
+  def map[A, B](as: List[A])(f: A => B): List[B] = {
+    foldRight(as, List(): List[B])((x, y) => Cons(f(x), y))
+  }
+
+  // Exercise 3.19
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    foldRight(as, List(): List[A])((x, y) => if (f(x)) y else Cons(x, y))
+  }
+
+  // Exercise 3.20
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = {
+    foldRight(as, List(): List[B])((x, y) => append2(f(x), y))
+  }
+
+  // Exercise 3.21
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] = {
+    flatMap(as)((x) => if (f(x)) List() else List(x))
+  }
+
+  // Exercise 3.22
+  def addLists(as1: List[Int], as2: List[Int]): List[Int] = (as1, as2) match {
+    case (_, Nil) => Nil
+    case (Nil, _) => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addLists(t1, t2))
+  }
+
+  // Exercise 3.23
+  def zipWith[A](as1: List[A], as2: List[A])(f:(A, A) => A): List[A] = (as1, as2) match {
+    case (_, Nil) => Nil
+    case (Nil, _) => Nil
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(f(h1, h2), zipWith(t1, t2)(f))
+  }
+
 }

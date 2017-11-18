@@ -149,4 +149,45 @@ class ListSpec extends FlatSpec with Matchers {
     List.doubleToString(List()) should be(List())
     List.doubleToString(Nil) should be(Nil)
   }
+
+  // Exercise 3.18
+  "Map" should "modifies every element in the given List" in {
+    List.map(List(1, 2, 3))(_ + 1) should be(List(2, 3, 4))
+    List.map(List(1, 2, 3))(_ * 3) should be(List(3, 6, 9))
+    List.map(List(): List[Int])(_ + 1) should be(List())
+  }
+
+  // Exercise 3.19
+  "Filter" should "filter the elements in the given List" in {
+    List.filter(List(1, 2, 3, 4, 5, 6))((x) => x % 2 == 1) should be(List(2, 4, 6))
+    List.filter(List(1, 2, 3, 4, 5, 6))((x) => x % 2 == 0) should be(List(1, 3, 5))
+    List.filter(List(): List[Int])((x) => x % 2 == 0) should be(List())
+
+    // Exercise 3.21
+    List.filter2(List(1, 2, 3, 4, 5, 6))((x) => x % 2 == 1) should be(List(2, 4, 6))
+    List.filter2(List(1, 2, 3, 4, 5, 6))((x) => x % 2 == 0) should be(List(1, 3, 5))
+    List.filter2(List(): List[Int])((x) => x % 2 == 0) should be(List())
+  }
+
+  // Exercise 3.20
+  "Flat map" should "modify every elements in the given List to a List" in {
+    List.flatMap(List(1, 2, 3))(i => List(i, i)) should be(List(1, 1, 2, 2, 3, 3))
+    List.flatMap(List())(i => List(i, i)) should be(List())
+  }
+
+  // Exercise 3.22
+  "Add list" should "add every element of the fist and second list" in {
+    List.addLists(List(1, 2, 3), List(4, 5, 6)) should be(List(5, 7, 9))
+    List.addLists(List(), List()) should be(List())
+  }
+
+  // Exercise 3.23
+  "Zip with" should "perform a function on every element of the fist and the second list" in {
+    List.zipWith(List(1, 2, 3), List(4, 5, 6))(_ + _) should be(List(5, 7, 9))
+    List.zipWith(List():List[Int], List(): List[Int])(_ + _) should be(List())
+
+    List.zipWith(List(2.0, 4.0, 6.0), List(0.5, 0.5, 0.5))(_ * _) should be(List(1.0, 2.0, 3.0))
+    List.zipWith(List():List[Double], List(): List[Double])(_ * _) should be(List())
+  }
+
 }
