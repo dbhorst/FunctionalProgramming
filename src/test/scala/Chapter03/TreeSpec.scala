@@ -11,18 +11,27 @@ class TreeSpec extends FlatSpec with Matchers {
 
     val tree2 = Branch(Leaf(1), Leaf(2))
     Tree.size(tree2) should be(3)
+
+    // Exercise 3.29
+    Tree.size2(tree) should be(5)
+    Tree.size2(tree2) should be(3)
   }
 
   // Execise 3.26
-  "Max" should "return return the max number in the tree" in {
+  "Maximum" should "return return the max number in the tree" in {
     val tree = Branch(Branch(Leaf(1), Leaf(2)), Leaf(3))
-    Tree.max(tree) should be(3)
+    Tree.maximum(tree) should be(3)
 
     val tree2 = Branch(Branch(Leaf(4), Leaf(2)), Leaf(2))
-    Tree.max(tree2) should be(4)
+    Tree.maximum(tree2) should be(4)
 
     val tree3 = Branch(Leaf(1), Leaf(2))
-    Tree.max(tree3) should be(2)
+    Tree.maximum(tree3) should be(2)
+
+    // Exercise 3.29
+    Tree.maximum2(tree) should be(3)
+    Tree.maximum2(tree2) should be(4)
+    Tree.maximum2(tree3) should be(2)
   }
 
   // Execise 3.27
@@ -35,6 +44,11 @@ class TreeSpec extends FlatSpec with Matchers {
 
     val tree3 = Branch(Leaf(1), Leaf(2))
     Tree.depth(tree3) should be(2)
+
+    // Exercise 3.29
+    Tree.depth2(tree) should be(3)
+    Tree.depth2(tree2) should be(4)
+    Tree.depth2(tree3) should be(2)
   }
 
   // Execise 3.28
