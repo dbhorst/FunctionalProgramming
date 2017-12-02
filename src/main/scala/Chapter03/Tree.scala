@@ -51,7 +51,7 @@ object Tree {
     fold(tree)((l: Int, r: Int) => (l max r) + 1)(_ => 1)
   }
 
-  //  def map2[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
-  //    fold(tree)((l, r) => Branch(l, r))(x => Leaf(f(x)))
-  //  }
+  def map2[A, B](tree: Tree[A])(f: A => B): Tree[B] = {
+    fold(tree)((l: Tree[B], r: Tree[B]) => Branch(l, r): Tree[B])(x => Leaf(f(x)))
+  }
 }

@@ -61,5 +61,9 @@ class TreeSpec extends FlatSpec with Matchers {
 
     val tree3 = Branch(Leaf(1), Leaf(2))
     Tree.map(tree3)(_ + 1) should be(Branch(Leaf(2), Leaf(3)))
+
+    Tree.map2(tree)(_ + 1) should be(Branch(Branch(Leaf(5), Leaf(6)), Leaf(7)))
+    Tree.map2(tree2)(_ + 1) should be(Branch(Branch(Branch(Leaf(5), Leaf(4)), Leaf(6)), Leaf(7)))
+    Tree.map2(tree3)(_ + 1) should be(Branch(Leaf(2), Leaf(3)))
   }
 }
