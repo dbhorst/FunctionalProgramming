@@ -151,7 +151,7 @@ class ListSpec extends FlatSpec with Matchers {
   }
 
   // Exercise 3.18
-  "Map" should "modifies every element in the given List" in {
+  "Map" should "modify every element in the given List" in {
     List.map(List(1, 2, 3))(_ + 1) should be(List(2, 3, 4))
     List.map(List(1, 2, 3))(_ * 3) should be(List(3, 6, 9))
     List.map(List(): List[Int])(_ + 1) should be(List())
