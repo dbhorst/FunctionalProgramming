@@ -32,5 +32,12 @@ class OptionSpec extends FlatSpec with Matchers {
     None.filter(_ => true) should be(None)
     None.filter(_ => false) should be(None)
   }
-  
+
+  // Execise 4.2
+  "Variance" should "return the variance of a list" in {
+    var list = List(8.0, 10.0, 6.0, 7.0, 9.0)
+    Option.variance(list) should be(Some(2.0))
+    Option.variance(List()) should be(None)
+  }
+
 }
