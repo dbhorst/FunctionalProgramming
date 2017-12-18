@@ -4,16 +4,16 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class OptionSpec extends FlatSpec with Matchers {
 
-  // Execise 4.1
-  "Map" should "modify every element" in {
+  // Exercise 4.1
+  "Map" should "modify the Element in the Option" in {
     Some(1).map(_ + 1) should be(Some(2))
     Some(List(1, 2, 3)).map(_.map(_+1)) should be(Some(List(2, 3, 4)))
     None.map(x => x) should be(None)
   }
 
-  "FlatMap" should "modify every elements in the given List to a List" in {
+  "FlatMap" should "modify the Element in the Option and return a new Option" in {
     Some(1).flatMap(i => Some(List(i, i))) should be(Some(List(1, 1)))
-    None.map(x => x) should be(None)
+    None.flatMap(x => x) should be(None)
   }
 
   "GetOrElse" should "return the result or (if there is none) a default value" in {
@@ -33,11 +33,18 @@ class OptionSpec extends FlatSpec with Matchers {
     None.filter(_ => false) should be(None)
   }
 
-  // Execise 4.2
+  // Exercise 4.2
   "Variance" should "return the variance of a list" in {
     var list = List(8.0, 10.0, 6.0, 7.0, 9.0)
     Option.variance(list) should be(Some(2.0))
     Option.variance(List()) should be(None)
   }
 
+  // Exercise 4.3
+  "Map2" should "map two Options on a function without Option" in {
+    Option.map2(Some(1), Some(2))(math.max) should be(Some(2))
+    Option.map2(None, Some(2))(math.max) should be(None)
+    Option.map2(Some(1), None)(math.max) should be(None)
+    Option.map2(None, None)(math.max) should be(None)
+  }
 }
