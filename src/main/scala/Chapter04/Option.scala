@@ -44,11 +44,28 @@ object Option {
   }
 
   // Exercise 4.3
-  def map2[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = (a, b) match {
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = (a, b) match {
     case (None, None) => None
     case (None, Some(_)) => None
     case (Some(_), None) => None
     case (Some(va), Some(vb)) => Some(f(va, vb))
+  }
+
+  // Exercise 4.4
+  def sequence[A](as: List[Option[A]]): Option[List[A]] = {
+
+    def go[A](list: List[Option[A]], result: List[A]): List[A] = list match {
+      case None :: t => Nil
+      case Some(h) :: Nil => List(h)
+      case Some(h) :: t => h :: go(t, result)
+    }
+
+    var result = go(as, List())
+    if (result.size == as.size) {
+      Some(result)
+    } else {
+      None
+    }
   }
 }
 

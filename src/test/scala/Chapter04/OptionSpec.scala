@@ -47,4 +47,11 @@ class OptionSpec extends FlatSpec with Matchers {
     Option.map2(Some(1), None)(math.max) should be(None)
     Option.map2(None, None)(math.max) should be(None)
   }
+
+  // Exercise 4.4
+  "Sequence" should "combine a list of Options into one Option containing a list of all the values" in {
+    Option.sequence(List(Some(1), Some(2), Some(3))) should be(Some(List(1, 2, 3)))
+    Option.sequence(List(Some(1), None, Some(3))) should be(None)
+    Option.sequence(List(None)) should be(None)
+  }
 }
