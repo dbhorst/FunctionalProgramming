@@ -39,7 +39,7 @@ object Option {
 
   // Exercise 4.2
   def variance(xs: Seq[Double]): Option[Double] = {
-    var m = mean(xs).getOrElse(0.0)
+    val m = mean(xs).getOrElse(0.0)
     mean(xs.map(x => math.pow(x - m, 2)))
   }
 
@@ -55,12 +55,12 @@ object Option {
   def sequence[A](as: List[Option[A]]): Option[List[A]] = {
 
     def go[A](list: List[Option[A]], result: List[A]): List[A] = list match {
-      case None :: t => Nil
-      case Some(h) :: Nil => List(h)
+      case Nil => Nil
+      case None :: _ => Nil
       case Some(h) :: t => h :: go(t, result)
     }
 
-    var result = go(as, List())
+    val result = go(as, List())
     if (result.size == as.size) {
       Some(result)
     } else {

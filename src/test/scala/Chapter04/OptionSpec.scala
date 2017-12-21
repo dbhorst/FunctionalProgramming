@@ -35,7 +35,7 @@ class OptionSpec extends FlatSpec with Matchers {
 
   // Exercise 4.2
   "Variance" should "return the variance of a list" in {
-    var list = List(8.0, 10.0, 6.0, 7.0, 9.0)
+    val list = List(8.0, 10.0, 6.0, 7.0, 9.0)
     Option.variance(list) should be(Some(2.0))
     Option.variance(List()) should be(None)
   }
