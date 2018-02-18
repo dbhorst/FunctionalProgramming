@@ -2,6 +2,8 @@ package Chapter04
 
 import org.scalatest.{FlatSpec, Matchers}
 
+import scala.util.{Success, Try}
+
 class OptionSpec extends FlatSpec with Matchers {
 
   // Exercise 4.1
@@ -53,5 +55,10 @@ class OptionSpec extends FlatSpec with Matchers {
     Option.sequence(List(Some(1), Some(2), Some(3))) should be(Some(List(1, 2, 3)))
     Option.sequence(List(Some(1), None, Some(3))) should be(None)
     Option.sequence(List(None)) should be(None)
+  }
+
+  // Exercise 4.5
+  "Traverse" should "apply a given function on all items in a list" in {
+    Option.traverse(List(1.0, 2.0, 3.0))(d => Some(Try(d.toInt))) should be(Some(List(Success(1), Success(2), Success(3))))
   }
 }

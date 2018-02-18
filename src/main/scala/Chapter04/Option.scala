@@ -44,28 +44,20 @@ object Option {
   }
 
   // Exercise 4.3
-  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = (a, b) match {
-    case (None, None) => None
-    case (None, Some(_)) => None
-    case (Some(_), None) => None
-    case (Some(va), Some(vb)) => Some(f(va, vb))
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = {
+    a.flatMap(aValue => b.map(bValue => f(aValue, bValue)))
   }
 
   // Exercise 4.4
-  def sequence[A](as: List[Option[A]]): Option[List[A]] = {
+  def sequence[A](as: List[Option[A]]): Option[List[A]] = as match {
+    case Nil => Some(Nil)
+    case h :: t => h.flatMap(headValue => sequence(t).map(next => headValue :: next))
+  }
 
-    def go[A](list: List[Option[A]], result: List[A]): List[A] = list match {
-      case Nil => Nil
-      case None :: _ => Nil
-      case Some(h) :: t => h :: go(t, result)
-    }
-
-    val result = go(as, List())
-    if (result.size == as.size) {
-      Some(result)
-    } else {
-      None
-    }
+  // Exercise 4.5
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
+    case Nil => Some(Nil)
+    case h :: t => f(h).flatMap(fh => traverse(t)(f).map(ft => fh :: ft))
   }
 }
 
